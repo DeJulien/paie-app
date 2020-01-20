@@ -27,23 +27,18 @@ public class InsererProfil implements Runnable{
 
 	@Override
 	public void run() {
-		List<Cotisation> cotisations=cotisationRepository.findAll();
-		List<Cotisation> cotisationsAjout= new ArrayList();
-		
-		for(Cotisation coti : cotisations)
-		{
-			if(coti.getId()==1)
-			{
-				cotisationsAjout.add(coti);
-			}
-			
-		}
+
+		List<Integer> listeId = new ArrayList<>();
+        listeId.add(1);
+        listeId.add(2);
+
+        List<Cotisation> cotisations = this.cotisationRepository.findAllById( listeId);
 		
 		//List<Avantage> avantages;
 		ProfilRemuneration profilRemuneration = new ProfilRemuneration();
 		profilRemuneration.setId(4);
 		profilRemuneration.setCode("Invite");
-		profilRemuneration.setCotisations(cotisationsAjout);
+		profilRemuneration.setCotisations(cotisations);
 		//profilRemuneration.setAvantages();
 		
 		this.profilRemunerationRepository.save(profilRemuneration);

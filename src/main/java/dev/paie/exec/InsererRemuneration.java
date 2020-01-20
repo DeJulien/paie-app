@@ -1,5 +1,6 @@
 package dev.paie.exec;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,7 @@ import dev.paie.repository.GradeRepository;
 import dev.paie.repository.ProfilRemunerationRepository;
 import dev.paie.repository.RemunerationEmployeRepository;
 
-@Controller
+//@Controller
 public class InsererRemuneration implements Runnable{
 
 	
@@ -35,15 +36,43 @@ public class InsererRemuneration implements Runnable{
 	@Override
 	public void run() {
 		
-		List<Grade> grade= gradeRepository.findAll();
-		List<ProfilRemuneration> profilRemuneration= profilRemunerationRepository.findAll();
-		List<Entreprise> entreprise= entrepriseRepository.findAll();
 		
+		Entreprise ent= new Entreprise();
+		List<Entreprise> entreprise = this.entrepriseRepository.findAll();
+		for(Entreprise temps : entreprise)
+		{
+			if(temps.getId()==1)
+			{
+				ent=temps;
+			}
+			
+		}
+		Grade g=new Grade();
+        List<Grade> grade = this.gradeRepository.findAll();
+        for(Grade temps : grade)
+		{
+			if(temps.getId()==2)
+			{
+				g=temps;
+			}
+			
+		}
+        ProfilRemuneration pR = new ProfilRemuneration();
+        List<ProfilRemuneration> profilRemuneration= this.profilRemunerationRepository.findAll();
+        for(ProfilRemuneration temps : profilRemuneration)
+		{
+			if(temps.getId()==5)
+			{
+				pR=temps;
+			}
+			
+		}
+
 		RemunerationEmploye remunerationEmploye = new RemunerationEmploye();
 		remunerationEmploye.setMatricule("test01");
-		/*remunerationEmploye.setEntreprise();
-		remunerationEmploye.setProfilRemuneration();
-		remunerationEmploye.setGrade();*/
+		remunerationEmploye.setEntreprise(ent);
+		remunerationEmploye.setProfilRemuneration(pR);
+		remunerationEmploye.setGrade(g);
 		remunerationEmploye.setId(1);
 		
 		this.remunerationEmployeRepository.save(remunerationEmploye);
